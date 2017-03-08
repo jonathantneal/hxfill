@@ -80,9 +80,35 @@ hxfill(document);
 hxfill(document)
 ```
 
-Watches the document for contextual headings and assigns them the appropriate `aria-level`.
+Watches the document for contextual headings and assigns them the appropriate
+`aria-level`.
 
 - `document`: document being observed (default is `window.document`).
+
+---
+
+## FAQ
+
+#### Why are different-leveled headings in the same section getting the same level?
+
+[hxfill] only assigns contextual levels according by sectioning container. This
+means an `<h2>` and an `<h3>` in same `<section>` receive the same level. This
+means the implicit sectioning of headings is lost. This is because it’s unclear
+how implicit sectioning works in relationship with explicit sectioning.
+
+Consider the following markup following the document outline:
+
+```html
+<h1>This is a top-level H1 heading</h1>
+  <p>This is some content elaborating on the H1</p>
+  <h2>And this is a slightly lesser H2 heading</h2>
+    <p>And this is some content elaborating on the H2</p>
+    <aside>
+      <h3>And this is an H3 heading probably the same level as the H2</h3>
+      <p>Because the aside element ended the implicit section of the H2</p>
+    </aside>
+    <p>This content either elaborates on the H2, begins a new implicit section, or means nothing</p>
+```
 
 ---
 
